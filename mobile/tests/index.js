@@ -21,6 +21,7 @@ var categories = [
 	{ tag: "Media", label: "Media"},
 	{ tag: "Opener", label: "Opener"},
 	{ tag: "ProgressIndicator", label: "ProgressIndicator"},
+	{ tag: "ProgressBar", label: "ProgressBar"},
 	{ tag: "Rating", label: "Rating"},
 	{ tag: "RoundRect", label: "RoundRect"},
 	{ tag: "RoundRectDataList", label: "RoundRectDataList"},
@@ -38,6 +39,7 @@ var categories = [
 	{ tag: "ToolBarButton", label: "ToolBarButton"},
 	{ tag: "TreeView", label: "TreeView"},
 	{ tag: "ValuePicker", label: "ValuePicker"},
+	{ tag: "View", label: "View"},
 	{ tag: "bookmarkable", label: "bookmarkable"},
 	{ tag: "domButton", label: "domButton"},
 	{ tag: "dynamic", label: "dynamic"},
@@ -242,6 +244,7 @@ var tests = [
 	{ url: "test_ValuePickerTimePicker.html", tags: "ValuePicker" },
 	{ url: "test_Video-single-source.html", tags: "Media" },
 	{ url: "test_Video.html", tags: "Media" },
+	{ url: "test_View-container-visibility.html", tags: "View" },
 
 	{ url: "test_a11y.html", tags: "misc" },
 	{ url: "test_add-to-home-screen-sample.html", tags: "misc" },
