@@ -22,7 +22,7 @@ define(['dojo/_base/declare', 'dojo/Deferred', 'dojo/when', 'dojo/store/util/Que
 			this.indices = dbConfig.stores[storeName];
 			this.repeatingIndices = {};
 			for(var index in this.indices){
-				// we support multiEntry property to simulate the similar behavior in IndexedDB, we track these becaues we use the
+				// we support multiEntry property to simulate the similar behavior in IndexedDB, we track these because we use the
 				if(this.indices[index].multiEntry){
 					this.repeatingIndices[index] = true;
 				}
@@ -238,17 +238,20 @@ define(['dojo/_base/declare', 'dojo/Deferred', 'dojo/when', 'dojo/store/util/Que
 							continue;
 						}else if(typeof filterValue == 'object' && ("from" in filterValue || "to" in filterValue)){
 							// a range object, convert to appropriate SQL operators
-							if("from" in filterValue){
+							var fromComparator = filterValue.excludeFrom ? '>' : '>=';
+							var toComparator = filterValue.excludeTo ? '<' : '<=';
+							if('from' in filterValue){
 								params.push(filterValue.from);
-								if("to" in filterValue){
+								if('to' in filterValue){
 									params.push(filterValue.to);
-									conditions.push('(' + table + '.' + i + '>=? AND ' + table + '.' + i + '<=?)');
+									conditions.push('(' + table + '.' + i + fromComparator + '? AND ' +
+										table + '.' + i + toComparator + '?)');
 								}else{
-									conditions.push(table + '.' + i + '>=?');
+									conditions.push(table + '.' + i + fromComparator + '?');
 								}
 							}else{
 								params.push(filterValue.to);
-								conditions.push(table + '.' + i + '<=?');
+								conditions.push(table + '.' + i + toComparator + '?');
 							}
 							continue;
 						}

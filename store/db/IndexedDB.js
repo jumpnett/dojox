@@ -184,10 +184,12 @@ define(['dojo/_base/declare', 'dojo/_base/lang', 'dojo/Deferred', 'dojo/when', '
 		//		one will trigger filtering with index and then sort the whole set.
 		//		we recommend setting boolean values at 0.1.
 		indices: {
-			// property: {
-			//		preference: 1,
-			//		multiEntry: true
-			// }
+			/*
+			property: {
+				preference: 1,
+				multiEntry: true
+			}
+			*/
 		},
 
 		queryEngine: SimpleQueryEngine,
@@ -469,9 +471,9 @@ define(['dojo/_base/declare', 'dojo/_base/lang', 'dojo/Deferred', 'dojo/when', '
 								},
 								keyRange: from ?
 										  to ?
-										  IDBKeyRange.bound(from, to) :
-										  IDBKeyRange.lowerBound(from) :
-										  IDBKeyRange.upperBound(to)
+										  IDBKeyRange.bound(from, to, filterValue.excludeFrom, filterValue.excludeTo) :
+										  IDBKeyRange.lowerBound(from, filterValue.excludeFrom) :
+										  IDBKeyRange.upperBound(to, filterValue.excludeTo)
 							};
 						})(filterValue.from, filterValue.to);
 					} else if (typeof filterValue === 'object' && filterValue.contains) {

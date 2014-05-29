@@ -12,8 +12,10 @@ define(['dojo/store/Memory', 'dojo/store/Cache', 'dojo/when', 'dojo/aspect', 'do
 	var defaultTransactionLogStore;
 	var stores = {};
 	var nextStoreId = 1;
-	return function(masterStore, cachingStore, options){
+	return function(options){
 		options = options || {};
+		var masterStore = options.masterStore;
+		var cachingStore = options.cachingStore;
 		var storeId = masterStore.id || masterStore.storeName || masterStore.name || (masterStore.id = nextStoreId++);
 		if(storeId){
 			stores[storeId] = masterStore;
@@ -43,14 +45,16 @@ define(['dojo/store/Memory', 'dojo/store/Cache', 'dojo/when', 'dojo/aspect', 'do
 					if(previousId !== undefined){
 						var previous = cachingStore.get(previousId);
 					}
-					when(previous, function(previous){
-						transactionLogStore.add({
+					return when(previous, function(previous){
+						return when(transactionLogStore.add({
 							objectId: previousId,
 							method: method,
 							target: target,
 							previous: previous,
 							options: options,
 							storeId: storeId
+						}), function(){
+							return target;
 						});
 					});
 				}
